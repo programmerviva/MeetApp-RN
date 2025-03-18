@@ -31,6 +31,18 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+
+	<!-- PERMISSION -->  
+	<key>NSCameraUsageDescription</key>  
+	<string>This app requires access to the camera to allow you to capture photos and videos.</string>  
+
+	<key>NSMicrophoneUsageDescription</key>  
+	<string>This app requires access to the microphone to enable audio recording and communication features.</string>  
+
+	<key>NSPhotoLibraryUsageDescription</key>  
+	<string>This app requires access to the microphone to enable audio recording and communication features.</string>  
+	<!-- PERMISSION -->  
+
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
 	<key>UILaunchStoryboardName</key>
