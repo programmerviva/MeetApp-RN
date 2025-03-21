@@ -7,6 +7,7 @@ import {peopleStyles} from './../styles/peopleStyles';
 import UserView from '../components/meet/UserView';
 import People from '../components/meet/People';
 import NoUserInvite from '../components/meet/NoUserInvite';
+import MeetFooter from '../components/meet/MeetFooter';
 
 const LiveMeetScreen = () => {
   const {containerDimendions, onContainerLayout} = useContainerDimensions();
@@ -32,9 +33,9 @@ const LiveMeetScreen = () => {
         ) : (
           <NoUserInvite />
         )}
-
-        
       </View>
+
+      <MeetFooter toggleMic={toggleMic} toggleVideo={toggleVideo} />
     </View>
   );
 };
