@@ -5,6 +5,8 @@ import {useWebRTC} from '../hooks/useWebRTC';
 import MeetHeader from '../components/meet/MeetHeader';
 import {peopleStyles} from './../styles/peopleStyles';
 import UserView from '../components/meet/UserView';
+import People from '../components/meet/People';
+import NoUserInvite from '../components/meet/NoUserInvite';
 
 const LiveMeetScreen = () => {
   const {containerDimendions, onContainerLayout} = useContainerDimensions();
@@ -21,6 +23,17 @@ const LiveMeetScreen = () => {
             containerDimendions={containerDimendions}
           />
         )}
+
+        {participants?.length > 0 ? (
+          <People
+            people={participants}
+            containerDimendions={containerDimendions}
+          />
+        ) : (
+          <NoUserInvite />
+        )}
+
+        
       </View>
     </View>
   );
