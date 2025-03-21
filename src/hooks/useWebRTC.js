@@ -107,7 +107,7 @@ export const useWebRTC = () => {
     startLocalStream();
     if (localStream) {
       return () => {
-        localStream.getTracks().forEach(track => {
+        localStream?.getTracks()?.forEach(track => {
           track.stop();
         });
       };
