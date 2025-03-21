@@ -1,10 +1,17 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React from 'react';
+import {useContainerDimensions} from '../hooks/useContainerDimensions';
+import {useWebRTC} from '../hooks/useWebRTC';
+import MeetHeader from '../components/meet/MeetHeader';
 
 const LiveMeetScreen = () => {
+  const {containerDimendions, onContainerLayout} = useContainerDimensions();
+  const {participants, localStream, toggleMic, toggleVideo, switchCamera} =
+    useWebRTC;
+
   return (
     <View style={styles.container}>
-      <Text>LiveMeetScreen</Text>
+      <MeetHeader switchCamera={switchCamera} />
     </View>
   );
 };

@@ -26,6 +26,7 @@ export const useWebRTC = () => {
     toggle,
     removeParticipant,
     updateParticipant,
+    clear,
   } = useLiveMeetStore();
   const {user} = useUserStore();
 
@@ -127,7 +128,7 @@ export const useWebRTC = () => {
         peerConnections.current.forEach(pc => pc.close());
         peerConnections.current.clear();
         addSessionId(null);
-        // clear();
+        clear();
         emit('hand-up');
         off('receive-ice-candidate');
         off('receive-offer');
