@@ -1,7 +1,17 @@
-import {View, Text, StyleSheet, Animated, PanResponder} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Animated,
+  PanResponder,
+  Image,
+} from 'react-native';
 import React, {useRef} from 'react';
 import {useLiveMeetStore} from '../../service/meetStore';
 import {useUserStore} from '../../service/userStore';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {RTCView} from 'react-native-webrtc';
+import {EllipsisVertical} from 'lucide-react-native';
 
 const UserView = ({containerDimensions, localStream}) => {
   const {width: containerWidth, height: contanierHeight} =
@@ -28,7 +38,7 @@ const UserView = ({containerDimensions, localStream}) => {
         pan.setValue({x: 0, y: 0});
       },
       onPanResponderMove: Animated.event([null, {dx: pan.x, dy: pan.y}], {
-        useNativeDriver: true,
+        useNativeDriver: false,
       }),
       onPanResponderRelease: (evt, gestureState) => {
         pan.flattenOffset();
@@ -102,9 +112,36 @@ const UserView = ({containerDimensions, localStream}) => {
         {
           transform: [{translateX: pan.x}, {translateY: pan.y}],
         },
-      ]} >
-        
-      </Animated.View>
+      ]}>
+      {user && (
+        <>
+          {localStream && videoOn ? (
+            <RTCView
+              streamURL={localStream?.toURL()}
+              style={styles.localVideo}
+              mirror
+              zOrder={2}
+              objectFit="cover"
+            />
+          ) : (
+            <>
+              {user?.photo ? (
+                <Image source={{uri: user?.photo}} style={styles.image} />
+              ) : (
+                <View style={styles.noVideo}>
+                  <Text style={styles.initial}>{user?.name?.charAt(0)}</Text>
+                </View>
+              )}
+            </>
+          )}
+        </>
+      )}
+
+      <Text style={styles.name}>You</Text>
+      <View style={styles.ellipsis}>
+        <EllipsisVertical color="#fff" size={RFValue(14)} />
+      </View>
+    </Animated.View>
   );
 };
 
@@ -124,6 +161,43 @@ const styles = StyleSheet.create({
     shadowRadius: 16,
     overflow: 'hidden',
     shadowColor: '#000',
+  },
+  ellipsis: {
+    position: 'absolute',
+    bottom: 5,
+    right: 2,
+  },
+  image: {
+    width: 40,
+    height: 40,
+    borderRadius: 40,
+  },
+  noVideo: {
+    backgroundColor: '#FF5100',
+    justifyContent: 'center',
+    alignContent: 'center',
+    width: 40,
+    height: 40,
+    borderRadius: 40,
+  },
+  localVideo: {
+    width: '100%',
+    borderRadius: 10,
+    height: '100%',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  initial: {
+    fontSize: RFValue(14),
+    color: '#fff',
+  },
+  name: {
+    position: 'absolute',
+    bottom: 5,
+    left: 5,
+    zIndex: 99,
+    fontWeight: '600',
+    color: '#fff',
+    fontSize: RFValue(10),
   },
 });
 
